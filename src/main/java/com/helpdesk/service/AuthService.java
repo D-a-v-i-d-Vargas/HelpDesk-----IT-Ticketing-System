@@ -1,7 +1,9 @@
 package com.helpdesk.service;
 
+import com.helpdesk.dto.LoginRequest;
 import com.helpdesk.model.User;
 import com.helpdesk.repository.UserRepository;
+import com.helpdesk.security.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,13 +15,15 @@ public class AuthService {
     private static final Logger securityLogger = LoggerFactory.getLogger(AuthService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
-public User register(User user){
+    public User register(User user){
 
         securityLogger.info("SECURITY_EVENT: Registration attempt initiated for the email address: {}", user.getEmail());
 
@@ -36,10 +40,34 @@ public User register(User user){
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
-        User savedUser = userRepository.save((user));
+        User savedUser = userRepository.save(user);
 
-        securityLogger.info("SECURITY_EVENT: User successfully registered with ID: {}", user.getUserID());
+        securityLogger.info("SECURITY_EVENT: User successfully registered with ID: {}", user.getUserId());
 
         return savedUser;
+    }
+
+    public String login(LoginRequest loginRequest){
+
+        securityLogger.info("SECURITY_EVENT: Login attempt initiated for email: {}", loginRequest.getEmail());
+
+        User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> {
+                    securityLogger.warn("SECURITY_ALERT: Login failed. User not found for email: {}", loginRequest.getEmail());
+                    return new IllegalArgumentException("Invalid email or password.");
+                });
+
+        boolean isPasswordMatch = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+
+        if (!isPasswordMatch) {
+            securityLogger.warn("SECURITY_ALERT: Login failed. Incorrect password for email: {}", loginRequest.getEmail());
+            throw new IllegalArgumentException("Invalid email or password.");
+        }
+
+        securityLogger.info("SECURITY_EVENT: Successful login for user ID: {}", user.getUserId());
+
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
+
+        return token;
     }
 }

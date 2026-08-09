@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long userID;
+    private Long userId;
 
     @Column( nullable = false)
     private String firstName;
@@ -29,7 +29,7 @@ public class User {
     private Role role;
 
     public User(Long userID, String firstName, String lastName, String email, String phoneNumber, String password, Role role) {
-        this.userID = userID;
+        this.userId = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -41,12 +41,12 @@ public class User {
     public User() {
     }
 
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() {
+        return userId;
     }
 
     public void setUserID(Long userID) {
-        this.userID = userID;
+        this.userId = userID;
     }
 
     public String getFirstName() {
@@ -100,7 +100,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID=" + userID +
+                "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

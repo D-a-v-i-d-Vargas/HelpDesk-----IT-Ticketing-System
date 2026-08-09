@@ -1,24 +1,32 @@
 package com.helpdesk.dto;
 
-public class RegisterRequest {
+public class UserResponse {
 
+    private Long userId;
     private String firstName;
     private String lastName;
     private String email;
-    private String password; // ¡Crucial para el registro!
     private String phoneNumber;
     private String role;
 
-    public RegisterRequest() {
+    public UserResponse() {
     }
 
-    public RegisterRequest(String firstName, String lastName, String email, String password, String phoneNumber, String role) {
+    public UserResponse(Long userId, String firstName, String lastName, String email, String phoneNumber, String role) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.role = role;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -43,14 +51,6 @@ public class RegisterRequest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhoneNumber() {
