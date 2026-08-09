@@ -51,6 +51,12 @@ public class Ticket {
         this.isDeleted = isDeleted;
     }
 
+    public Ticket(String title, String description, TicketPriority ticketPriority) {
+        this.title = title;
+        this.description = description;
+        this.ticketPriority = ticketPriority;
+    }
+
     public Ticket() {
     }
 

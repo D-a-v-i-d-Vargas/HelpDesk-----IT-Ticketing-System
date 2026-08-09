@@ -3,6 +3,8 @@ package com.helpdesk.dto;
 import com.helpdesk.model.TicketPriority;
 import com.helpdesk.model.TicketStatus;
 
+import java.time.LocalDateTime;
+
 public class TicketResponse {
 
     private Long ticketId;
@@ -10,16 +12,18 @@ public class TicketResponse {
     private String description;
     private TicketStatus ticketStatus;
     private TicketPriority ticketPriority;
+    private LocalDateTime createdAt;
 
     private UserResponse createdBy;
     private UserResponse assignedAgent;
 
-    public TicketResponse(Long ticketId, String title, String description, TicketStatus ticketStatus, TicketPriority ticketPriority, UserResponse createdBy, UserResponse assignedAgent) {
+    public TicketResponse(Long ticketId, String title, String description, TicketStatus ticketStatus, TicketPriority ticketPriority, LocalDateTime createdAt, UserResponse createdBy, UserResponse assignedAgent) {
         this.ticketId = ticketId;
         this.title = title;
         this.description = description;
         this.ticketStatus = ticketStatus;
         this.ticketPriority = ticketPriority;
+        this.createdAt = createdAt;
         this.createdBy = createdBy;
         this.assignedAgent = assignedAgent;
     }
@@ -81,5 +85,13 @@ public class TicketResponse {
 
     public void setAssignedAgent(UserResponse assignedAgent) {
         this.assignedAgent = assignedAgent;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
