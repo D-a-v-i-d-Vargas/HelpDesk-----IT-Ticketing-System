@@ -37,6 +37,7 @@ public class Ticket {
     @OneToMany(mappedBy = "ticket")
     private List<Comment> comments = new ArrayList<>();
 
+    @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
 
     public Ticket(String title, String description, TicketStatus ticketStatus, TicketPriority ticketPriority, LocalDateTime createdAt, User createdBy, User assignedAgent, List<Comment> comments, Boolean isDeleted) {

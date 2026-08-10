@@ -27,11 +27,15 @@ public class Comment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Comment(String content, LocalDateTime createdAt, Ticket ticket, User user) {
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
+
+    public Comment(String content, LocalDateTime createdAt, Ticket ticket, User user, Boolean isDeleted) {
         this.content = content;
         this.createdAt = createdAt;
         this.ticket = ticket;
         this.user = user;
+        this.isDeleted = isDeleted;
     }
 
     public Comment() {
@@ -75,6 +79,14 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override
