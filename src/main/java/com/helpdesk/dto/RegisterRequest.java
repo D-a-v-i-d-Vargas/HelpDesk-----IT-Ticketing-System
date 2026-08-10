@@ -1,17 +1,20 @@
 package com.helpdesk.dto;
 
+// Data transfer object for handling user registration payloads
 public class RegisterRequest {
 
     private String firstName;
     private String lastName;
     private String email;
-    private String password; // ¡Crucial para el registro!
+    private String password;
     private String phoneNumber;
     private String role;
 
+    // Default constructor required by Spring during request binding
     public RegisterRequest() {
     }
 
+    // Full constructor to initialize all user registration fields
     public RegisterRequest(String firstName, String lastName, String email, String password, String phoneNumber, String role) {
         this.firstName = firstName;
         this.lastName = lastName;

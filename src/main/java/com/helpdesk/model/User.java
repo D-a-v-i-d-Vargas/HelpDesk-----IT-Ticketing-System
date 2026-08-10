@@ -2,21 +2,22 @@ package com.helpdesk.model;
 
 import jakarta.persistence.*;
 
+// JPA Entity representing application user records in the database
 @Entity
 @Table(name = "users")
-
 public class User {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String firstName;
 
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String lastName;
 
-    @Column (nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String phoneNumber;
@@ -28,8 +29,13 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    public User(Long userID, String firstName, String lastName, String email, String phoneNumber, String password, Role role) {
-        this.userId = userID;
+    // Default constructor required by JPA framework
+    public User() {
+    }
+
+    // Parameterized constructor for constructing user entities
+    public User(Long userId, String firstName, String lastName, String email, String phoneNumber, String password, Role role) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -38,15 +44,12 @@ public class User {
         this.role = role;
     }
 
-    public User() {
-    }
-
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserID(Long userID) {
-        this.userId = userID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -97,6 +100,7 @@ public class User {
         this.role = role;
     }
 
+    // Custom toString implementation masking sensitive credentials for secure log outputs
     @Override
     public String toString() {
         return "User{" +
@@ -105,7 +109,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
+                ", password='[PROTECTED]'" +
                 ", role=" + role +
                 '}';
     }

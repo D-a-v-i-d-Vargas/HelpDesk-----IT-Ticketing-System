@@ -1,15 +1,18 @@
 package com.helpdesk.dto;
 
+// Payload structure for authentication requests
 public class LoginRequest {
 
     private String email;
     private String password;
 
-    public String getPassword() {
-        return password;
+    // Default constructor required by Jackson for request body deserialization
+    public LoginRequest() {
     }
 
-    public void setPassword(String password) {
+    // All-arguments constructor useful for unit test setups
+    public LoginRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
@@ -19,5 +22,13 @@ public class LoginRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

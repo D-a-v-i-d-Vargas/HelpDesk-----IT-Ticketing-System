@@ -1,5 +1,6 @@
 package com.helpdesk.dto;
 
+// Sanitized user representation payload that omits sensitive credentials like passwords
 public class UserResponse {
 
     private Long userId;
@@ -9,9 +10,11 @@ public class UserResponse {
     private String phoneNumber;
     private String role;
 
+    // Default constructor required for Jackson framework mapping
     public UserResponse() {
     }
 
+    // Parameterized constructor used when converting entity models to DTO responses
     public UserResponse(Long userId, String firstName, String lastName, String email, String phoneNumber, String role) {
         this.userId = userId;
         this.firstName = firstName;

@@ -6,7 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+// Repository interface managing database persistence operations for User entities
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    // Custom query method retrieving a User account by unique email address
     Optional<User> findByEmail(String email);
 }
