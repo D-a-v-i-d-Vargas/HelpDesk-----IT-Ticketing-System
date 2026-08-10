@@ -2,11 +2,14 @@ package com.helpdesk.service;
 
 import com.helpdesk.dto.CommentRequest;
 import com.helpdesk.dto.CommentResponse;
+import com.helpdesk.dto.UserResponse;
 import com.helpdesk.exception.ResourceNotFoundException;
 import com.helpdesk.model.Comment;
 import com.helpdesk.model.Ticket;
+import com.helpdesk.model.User;
 import com.helpdesk.repository.CommentRepository;
 import com.helpdesk.repository.TicketRepository;
+import com.helpdesk.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -96,7 +99,7 @@ public class CommentService {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
-                user.getRole()
+                user.getRole().toString()
         );
     }
 

@@ -2,12 +2,15 @@ package com.helpdesk.service;
 
 import com.helpdesk.dto.TicketRequest;
 import com.helpdesk.dto.TicketResponse;
+import com.helpdesk.dto.UserResponse;
 import com.helpdesk.exception.ResourceNotFoundException;
 import com.helpdesk.model.Ticket;
 
 import static com.helpdesk.model.TicketStatus.OPEN;
 
+import com.helpdesk.model.User;
 import com.helpdesk.repository.TicketRepository;
+import com.helpdesk.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,7 +23,6 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
-    private final TicketRepository ticketRepository;
 
     public TicketService(TicketRepository ticketRepository, UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
@@ -115,7 +117,7 @@ public class TicketService {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
-                user.getRole()
+                user.getRole().toString()
         );
     }
 
