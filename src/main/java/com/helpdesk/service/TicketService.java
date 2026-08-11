@@ -8,6 +8,7 @@ import com.helpdesk.model.Ticket;
 
 import static com.helpdesk.model.TicketStatus.OPEN;
 
+import com.helpdesk.model.TicketStatus;
 import com.helpdesk.model.User;
 import com.helpdesk.repository.TicketRepository;
 import com.helpdesk.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TicketService {
@@ -134,4 +136,27 @@ public class TicketService {
                         ? convertToUserResponse(ticket.getAssignedAgent())
                         : null);
     }
+
+    public TicketResponse updateTicketStatus(Long id, TicketStatus newStatus){
+        Ticket ticket = findEntityTicketById(id);
+        TicketStatus currentStatus = ticket.getTicketStatus();
+
+        System.out.println("Current status: " + currentStatus);
+        System.out.println("New status: " + newStatus);
+
+        if (ALLOWED_TRANSITIONS.get(currentStatus) != newStatus) {
+            throw new IllegalArgumentException("Invalid ticket status transition");
+        }
+
+        ticket.setTicketStatus(newStatus);
+        ticketRepository.save(ticket);
+
+        return convertToTicketResponse(ticket);
+    }
+
+    private static final Map<TicketStatus, TicketStatus> ALLOWED_TRANSITIONS = Map.of(
+            TicketStatus.OPEN, TicketStatus.IN_PROGRESS,
+            TicketStatus.IN_PROGRESS, TicketStatus.RESOLVED,
+            TicketStatus.RESOLVED, TicketStatus.CLOSED
+    );
 }
